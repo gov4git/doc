@@ -1,0 +1,6 @@
+[book]
+authors = ["Petar Maymounkov"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Decentralized applications and micro-chains over git"
