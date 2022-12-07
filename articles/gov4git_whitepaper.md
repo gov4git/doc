@@ -78,7 +78,8 @@ Reliance on git as infrastructure also accounts for a remarkably low barrier to 
 The lack of dependence on high-end cloud services (such as sophisticated storage solutions, used by most dapp architectures) affords social networks based on git to be truly independent of large international networking backbones (such as those of Google, Amazon, or Microsoft). In particular, such networks can be deployed rapidly in war-torn countries and other disaster areas.
 
 - standard tooling
-  - observability, troubleshooting, transperancy
+  - observability, troubleshooting, transparancy
+- simplified app development due to built-in state synchronization and compression
 
 XXX
 - optimal bandwidith utilization at the cost of sync latency
