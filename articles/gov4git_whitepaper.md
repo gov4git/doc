@@ -6,8 +6,11 @@ Due to the sheer scale of this project — anticipating a number of contributors
 
 ### Problem statement
 
-From an application point of view, the book project needs to support a variety of community organizational procedures, such as:
+On its inception, the book project had a variety of specific community organizing needs along with the expectation that these needs will evolve organically over time and will entail experimentation as the norm.
 
+The minimal viable set of features largely focused on the ability to manage a community of contributors with various roles, and conduct free, fair and transparent polls for prioritizing work (such as issues or pull requests). Furthermore, we were interested in using novel polling and voting algorithms (such as the many flavors of quadratic voting) which in turn necessitate mechanisms like community-scoped currencies (for keeping track of voting rights, for instance).
+
+XXX
 - Maintain a registry of the identities of its contributors
 - Maintain a fine-grained differentiation of roles and responsibilities of individual contributors, such as "organizer", "translator for Korean", "typesetter", "editor for chapter 4" and so on.
 - Reward contributors with virtual certificates some of which may have community scope, such as badges or voting credits, while others may have exogenous scope e.g. blockchain-scoped SBTs or hypercerts.
@@ -19,11 +22,13 @@ From an application point of view, the book project needs to support a variety o
 - Perform services requested by the community members. For instance, a community member may request:
   - "Transfer 20 of my voting credits to Alice."
 
-We determined that this initial list of functionalities will suffice for an MVP and will go a long way in facilitating the book project, as well as potentially other projects where community-sourced prioritization is essential, such as the [Filecoin specification proposals](XXX) project.
+We determined that such a set of functionalities would suffice for an MVP and will go a long way in facilitating the book project, as well as potentially other projects where community-sourced prioritization is essential, such as the [Filecoin specification proposals](XXX) project.
 
 Nevertheless, we also understood that any application in governance will have to endure numerous changes throughout its lifetime to be successful. By its very nature governance is always-evolving and entails continuous, live experimentation with new policies and functionalities. For instance, a key objective of the book project is to experiment with a variety of research-stage quadratic voting schemes that mediate participants' voting power in ways that ensure representation of diverse points of view.
 
 As a result, we set our sight on creating a framework for building governance applications which would enable rapid and safe experimentation by its users and in production.
+
+
 
 - Transparency
 - Security
@@ -44,9 +49,23 @@ As a result, we set our sight on creating a framework for building governance ap
       - rapid iteration with new logics and rules
 
 
+### Decentralized social applications over git
 
-<hr>
-- large scale open source community organizing
+By definition governance is a social application. It entails multiple stakeholders — such as contributors, organizers, even the organization itself — asynchronously communicating on matters of governance. For instance, a contributor may send their vote on a ballot administered by the organization; the organization may send notifications to contributors about a pending referendum on a pull request approval; or one contributor may simply want to engage in a private chat session with another.
+
+Any application involving communication requires an identity system and a mechanism for secure and verifiable communication. The tension in designing a practical architecture for a decentralized application lies between two opposing objectives:
+
+- On the one hand, we aspire to impose minimal infrastructural requirements on the end users, who are ultimately responsible for owning and managing their instances (of execution and/or data) in the application.
+
+- On the other hand, we aspire to provide a method of communication which is secure, verifiable, efficient, timely and fast.
+
+No solution is perfect, rather different trade-offs exist. For instance, in [Solid](https://solidproject.org/) Tim Berners-Lee posits that the user's instance of a decentralized application should be encapsulated in a container, respectively making end users responsible for managing container-level technology and migratory routines. This burden to the user is somewhat mitigated by the use of a specialized deployment provider, in this case [Inrupt](https://www.inrupt.com/). However, this comes at the cost of a significant reduction in access to this technology and diversity of providers. Citizens of most countries cannot purchase Inrupt services, and geographic diversity of Inrupt services is predicated on using one of the cloud giants.
+
+An alternative architectural approach is federation, as used by services such as [Mastodon](XXX) and [Matrix](XXX). This approach relieves end users from managing infrastructure, but it requires them to associate with a federation server which comes with some downsides. Federated servers generally provide lower performance and lower reliability guarantees than analogous cloud services. It may be hard to migrate a user's identity or application history from one server to another, as URLs are often server-dependent. Finally, the [deployment requirements of federated systems such as Mastodon](https://docs.joinmastodon.org/user/run-your-own/) are so dependent on higher-level cloud services that in practice the only places they can be deployed are the cloud giants, which reduces the diversity of their availability as was the case with Inrupt's approach.
+
+
+
+### Governance as a state machine
 
 <hr>
 
