@@ -65,6 +65,14 @@ An alternative architectural approach is federation, as used by services such as
 
 [BlueSky](https://atproto.com/docs) is adopting a variation on federation. Users' application instances are hosted on federated servers, similarly to Matrix or Mastodon. However, every user's identity is effectively embodied in a DNS name that they own, control and manage. Users' public DNS names are the gateway to their cryptographic identities as well as to the federation servers that they use. This approach promises to improve the user's agency to migrate, in contrast to other federated services. Nonetheless, the deployment of federation servers continues to be predicated on high-level cloud services (such as storage and VMs), which creates the same frictions to proliferation and diversity of availability applicable to Inrupt, Matrix and Mastodon.
 
+In this work, we propose a new trade-off in decentralized application architecture which accomplishes extreme diversity, availability and durability of service at the cost of a tolerable degradation in the latency experienced by users.
+
+We posit that a decentralized application can be built on top of git as the only required infrastructure.
+Every participant hosts the state of their application identity is a pair of git repositories: a public one, used for sharing information with other participants, and a private one, for personal data and keys. The public identity of each user is captured in a DNS name (owned, controlled and managed by the user), which points to the public git repository of that participant.
+
+XXX
+dns: independence from hosting providers
+one-click migration
 
 
 ### Governance as a state machine
