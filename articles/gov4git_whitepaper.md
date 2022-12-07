@@ -63,6 +63,8 @@ No solution is perfect, rather different trade-offs exist. For instance, in [Sol
 
 An alternative architectural approach is federation, as used by services such as [Mastodon](XXX) and [Matrix](XXX). This approach relieves end users from managing infrastructure, but it requires them to associate with a federation server which comes with some downsides. Federated servers generally provide lower performance and lower reliability guarantees than analogous cloud services. It may be hard to migrate a user's identity or application history from one server to another, as URLs are often server-dependent. Finally, the [deployment requirements of federated systems such as Mastodon](https://docs.joinmastodon.org/user/run-your-own/) are so dependent on higher-level cloud services that in practice the only places they can be deployed are the cloud giants, which reduces the diversity of their availability as was the case with Inrupt's approach.
 
+[BlueSky](https://atproto.com/docs) is adopting a variation on federation. Users' application instances are hosted on federated servers, similarly to Matrix or Mastodon. However, every user's identity is effectively embodied in a DNS name that they own, control and manage. Users' public DNS names are the gateway to their cryptographic identities as well as to the federation servers that they use. This approach promises to improve the user's agency to migrate, in contrast to other federated services. Nonetheless, the deployment of federation servers continues to be predicated on high-level cloud services (such as storage and VMs), which creates the same frictions to proliferation and diversity of availability applicable to Inrupt, Matrix and Mastodon.
+
 
 
 ### Governance as a state machine
