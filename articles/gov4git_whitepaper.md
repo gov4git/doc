@@ -67,12 +67,23 @@ An alternative architectural approach is federation, as used by services such as
 
 In this work, we propose a new trade-off in decentralized application architecture which accomplishes extreme diversity, availability and durability of service at the cost of a tolerable degradation in the latency experienced by users.
 
-We posit that a decentralized application can be built on top of git as the only required infrastructure. Every participant hosts the state of their application identity is a pair of git repositories: a public one, used for sharing information with other participants, and a private one, for personal data and keys. The public identity of each user is captured in a DNS name (owned, controlled and managed by the user), which points to the public git repository of that participant.
+We posit that a decentralized application can be built on top of git as the only required infrastructure. Every participant hosts the state of their application identity in a pair of git repositories: a public one, used for sharing information with other participants, and a private one, for personal data and keys. The public identity of each user is captured in a DNS name (owned, controlled and managed by the user), which points to the public git repository of that participant.
+
+Similarly to BlueSky, the association between DNS and identity decouples the user's data and application logic from dependence on hosting providers (or federation providers in the case of BlueSky). Our approach of using git as infrastructure provides a few additional benefits. 
+
+Out of the box the git protocol itself provides essentially "one-click" migration and replication functionalities. This means that application users are truly able to transition providers nearly instantaneously using well-understood and much practiced standard workflows, which can be performed with any git client and do not require specialized software. To the best of our knowledge, no existing dapp architecture supports this level of frictionless migration. It should be noted that while ease of migration may seem a tangential consideration, it is the key measure and driver of infrastructure independence for dapps. The only better alternative to frictionless migration is requiring end users to own their infrastructure down to the metal which is untenable.
+
+Reliance on git as infrastructure also accounts for a remarkably low barrier to deployment of a personal application instance. Git hosting is ubiquitously accessible around the world. Hosting opportunities range from high-end commercial (such as GitHub, GitLab, BitBucket, or SourceForge) in the industrialized world, to mid- and small-size offerings based on open-source software (such as Gitea) in developing countries, to standard ad-hoc solutions such as running the git client in server mode through an SSH server on UNIX systems.
+
+The lack of dependence on high-end cloud services (such as sophisticated storage solutions, used by most dapp architectures) affords social networks based on git to be truly independent of large international networking backbones (such as those of Google, Amazon, or Microsoft). In particular, such networks can be deployed rapidly in war-torn countries and other disaster areas.
+
+- standard tooling
+  - observability, troubleshooting, transperancy
 
 XXX
-- dns: independence from hosting providers
-- one-click migration
 - optimal bandwidith utilization at the cost of sync latency
+
+- comms and channels
 
 ### Governance as a state machine
 
