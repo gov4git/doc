@@ -57,7 +57,7 @@ Any application involving communication requires an identity system and a mechan
 
 - On the one hand, we aspire to impose minimal infrastructural requirements on the end users, who are ultimately responsible for owning and managing their instances (of execution and/or data) in the application.
 
-- On the other hand, we aspire to provide a method of communication which is secure, verifiable, efficient, timely and fast.
+- On the other hand, we aspire to provide a method of communication which is secure, verifiable, efficient and fast.
 
 No solution is perfect, rather different trade-offs exist. For instance, in [Solid](https://solidproject.org/) Tim Berners-Lee posits that the user's instance of a decentralized application should be encapsulated in a container, respectively making end users responsible for managing container-level technology and migratory routines. This burden to the user is somewhat mitigated by the use of a specialized deployment provider, in this case [Inrupt](https://www.inrupt.com/). However, this comes at the cost of a significant reduction in access to this technology and diversity of providers. Citizens of most countries cannot purchase Inrupt services, and geographic diversity of Inrupt services is predicated on using one of the cloud giants.
 
@@ -75,16 +75,18 @@ Out of the box the git protocol itself provides essentially "one-click" migratio
 
 Reliance on git as infrastructure also accounts for a remarkably low barrier to deployment of a personal application instance. Git hosting is ubiquitously accessible around the world. Hosting opportunities range from high-end commercial (such as GitHub, GitLab, BitBucket, or SourceForge) in the industrialized world, to mid- and small-size offerings based on open-source software (such as Gitea) in developing countries, to standard ad-hoc solutions such as running the git client in server mode through an SSH server on UNIX systems.
 
-The lack of dependence on high-end cloud services (such as sophisticated storage solutions, used by most dapp architectures) affords social networks based on git to be truly independent of large international networking backbones (such as those of Google, Amazon, or Microsoft). In particular, such networks can be deployed rapidly in war-torn countries and other disaster areas.
+The lack of dependence on high-end cloud services (such as sophisticated storage solutions, used by most dapp architectures) affords social networks based on git to be truly independent of large international networking backbones (such as those of Google, Amazon, or Microsoft). In particular, such networks can be deployed rapidly in war-torn countries and other disaster areas with only a standard Linux distribution at hand.
 
-- standard tooling
-  - observability, troubleshooting, transparancy
-- simplified app development due to built-in state synchronization and compression
+Beyond improving access to infrastructure, using git provides a number of benefits to application development. The mature ecosystem of developer tooling (e.g. IDE integrations) for git facilitates common tasks such as inspecting (local and remote) application state when developing, debugging or auditing. In contrast, inspecting the state of a live smart contract without (or even with) access to the original application schema is non-trivial and time-consuming.
 
-XXX
-- optimal bandwidith utilization at the cost of sync latency
+Using git for application storage also affords us to build a simple, reactive application development framework which relieves developers from data management considerations such as caching, compression and networking. In part these benefits come "for free" from git's built-in capabilities, such as bandwidth-optimal synchronization and blob compression. Still, cloning large repositories can be slow and can affect user experience. We have mitigated this issue to a reasonable degree by developing a local git cache at the client, which saves bandwidth and latency transparently to the application.
 
-- comms and channels
+There are two caveats to using git as an application backend. Users will experience a latency in UI interactions stemming from the underlying multi-round cloning protocol used by git. This latency is perceptibly longer (e.g. 1-2 seconds) compared to Web2 applications (e.g. 200ms), but also perceptibly shorter than blockchain-based applications (e.g. 1 min). Standard git hosting solutions prohibit unsolicited communication. This makes it hard to implement applications such as email over git, for instance. On the other hand, most modern social applications — such as social networking or community governance — do not entail unsolicited communication.
+
+In our application framework, if Alice wants to send a message to Bob, she deposits the message in her own public repository in a "mailbox" branch dedicated to communication from Alice to Bob on a given topic. Bob's application will fetch outstanding messages on its own initiative. Messages are signed and can be encrypted.
+
+Communication is implemented using a creative application of git primitives. The receiving party, Bob in our case, maintains a branch in their repository which 
+
 
 ### Governance as a state machine
 
