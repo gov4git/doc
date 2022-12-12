@@ -83,12 +83,9 @@ Using git for application storage also affords us to build a simple, reactive ap
 
 There are two caveats to using git as an application backend. Users will experience a latency in UI interactions stemming from the underlying multi-round cloning protocol used by git. This latency is perceptibly longer (e.g. 1-2 seconds) compared to Web2 applications (e.g. 200ms), but also perceptibly shorter than blockchain-based applications (e.g. 1 min). Standard git hosting solutions prohibit unsolicited communication. This makes it hard to implement applications such as email over git, for instance. On the other hand, most modern social applications — such as social networking or community governance — do not entail unsolicited communication.
 
-In our application framework, if Alice wants to send a message to Bob, she deposits the message in her own public repository in a "mailbox" branch dedicated to communication from Alice to Bob on a given topic. Bob's application will fetch outstanding messages on its own initiative. Messages are signed and can be encrypted.
+Our application framework uses a channel-like abstraction to model directed communication from Alice to Bob. Conceptually, Alice and Bob share a git branch that Alice can write to and Bob can read from. When Alice appends a new git commit to the branch, she is sending a message to Bob. Under the hood, Alice maintains a _dropbox_ branch, associated with the channel, inside her public repository. Bob maintains a branch within his repository that tracks Alice's dropbox and synchronizes with it occasionally, processing previously unseen messages. Communication is signed (and verified) generically at the commit level. Communication can also be encrypted by applying encryption to individual files inside the repository.
 
-Communication is implemented using a creative application of git primitives. The receiving party, Bob in our case, maintains a branch in their repository which 
-
-
-### Governance as a state machine
+### Governance as a community blockchain
 
 <hr>
 
