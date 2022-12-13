@@ -89,6 +89,8 @@ Our application framework uses a channel-like abstraction to model directed comm
 
 <hr>
 
+![Government chain](govchain.svg)
+
 ## Cover
 - what is governance
   - protocol between members + format and location of record keeping
