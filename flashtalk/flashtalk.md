@@ -1,9 +1,14 @@
-Title: Practical secure and transparent governance using git and DNS alone
-Synopsis: XXX
+_Title_
+gov4git: Practical secure and transparent governance using git and DNS
+
+_Synopsis_
+We demonstrate a practical way to build decentralized community governance applications
+using only very basic, widely-available infrastructure (DNS, git) while still offering most of the security guarantees of expensive and complex solutions based on public blockchain technology.
 
 ## 1. A real-world problem
 
-conceive and organize a large-scale open-source project
+problem
+     conceive and organize a large-scale open-source project in timely fashion
 
 functional needs
      - directory of member identities
@@ -15,9 +20,8 @@ functional needs
      - quadratic voting of many flavors
 
 situational constraints
-     - time is of the essence (a solution is needed now)
-     - real-world governance is an evolution (not a solution)
-       - experimentation and iteration with governing rules is the norm
+     - real-world governance is an evolution
+       - experimentation and iteration with governing logic is the norm
      - large communities (> dunbar) need mechanisms for protecting member rights
        - users can audit and verify governance history
      - high accessibility, minimal infrastructure
