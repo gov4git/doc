@@ -8,7 +8,7 @@ using only very basic, widely-available infrastructure (DNS, git) while still of
 ## 1. A real-world problem
 
 problem
-     conceive and organize a large-scale open-source project in timely fashion
+     conceive and govern a large-scale open-source project in a timely fashion
 
 functional needs
      - directory of member identities
@@ -23,8 +23,8 @@ situational constraints
      - real-world governance is an evolution
        - experimentation and iteration with governing logic is the norm
      - large communities (> dunbar) need mechanisms for protecting member rights
-       - users can audit and verify governance history
-     - high accessibility, minimal infrastructure
+       - users must be able to audit and verify governance history
+     - cheap and easy deployment in potentially disconnected, war-torn or fire-walled regions
 
 ## 2. Software perspective
 
@@ -51,6 +51,8 @@ Textbook application for a smart-contract, but not practical:
 - Slow, expensive
 - Complex development, using bleeding edge tools
 - Unnecessary dependence on public blockchains
+
+An open source community already uses git. Can git be reused for governance? Yes.
 
 A sovereign community blockchain can be built on git and DNS as the only required infrastructure.
 - Governance can be bootstrapped in a war-torn zone using a standard Linux distribution and a local network connection alone.
