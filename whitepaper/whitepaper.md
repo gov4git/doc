@@ -85,11 +85,19 @@ There are two caveats to using git as an application backend. Users will experie
 
 Our application framework uses a channel-like abstraction to model directed communication from Alice to Bob. Conceptually, Alice and Bob share a git branch that Alice can write to and Bob can read from. When Alice appends a new git commit to the branch, she is sending a message to Bob. Under the hood, Alice maintains a _dropbox_ branch, associated with the channel, inside her public repository. Bob maintains a branch within his repository that tracks Alice's dropbox and synchronizes with it occasionally, processing previously unseen messages. Communication is signed (and verified) generically at the commit level. Communication can also be encrypted by applying encryption to individual files inside the repository.
 
-### Governance as a community blockchain
+### Governance-specific blockchain design
+
+A _blockchain_ is an implementation of a state machine. State changes are driven by asynchronous inputs (such as a "call" to a smart contract method) originating at the miners.
+
+In traditional blockchains, like Ethereum, inputs arising from different miners may result in conflicting changes to the global state. To resolve this conflict, traditional blockchains entail a consensus algorithm which selects and commits the changes proposed by a single miner. The changes proposed by all other miners are discarded and to be attempted at a later time. These conflicts are unavoidable because, by design, different independent applications may try to access the same state and there is no application-level logic that can resolve cross-application conflicts.
+
+In contrast, when a blockchain is dedicated to a single application the potential conflicts arising from inputs at different miners can be resolved at the application level. This observation affords us to design a governance-specific blockchain which sidesteps expensive conflict resolution (and leader election) primitives, such as proof-of-work, proof-of-stake, and so on.
+
+We describe a governance-specific blockchain wherein the miners are the application stakeholders themselves — the community members, in our case. We adopt the [partially synchronous](https://timroughgarden.org/f21/l6.pdf) communication model whereby participant have access to a shared clock (and some reasonable assumptions can be made about network latencies). Note that a shared clock is definitionally required by a governance application, in part because any ballot requiring human input is open for voting during an interval specified relative to the standard time (e.g. GMT).
+
+
 
 <hr>
-
-![Government chain](govchain.svg)
 
 ## Cover
 - what is governance
