@@ -98,7 +98,7 @@ This crucial difference enables us to design a blockchain architecture for gover
 The key architectural difference between our governance blockchain and a traditional blockchain is in the order of operations involved in processing user requests. When user requests arrive at the miners, the miners share all user requests unprocessed using a Byzantine fault-tolerant broadcast protocol. Once all miners reliably agree on the totality of all user requests in an epoch, each miner independently computes the change in state by invoking the governance application and providing it with all user requests. 
 Since the governance application is deterministic, all miners compute the same change. This protocol effectively pushes the responsibility of resolving conflicts between user requests to the governance application.
 
-#### Technical dive
+#### Technical architecture outline
 
 A governance blockchain consists of a set of miners. Each miner maintains a replica of the blockchain, which holds the state of the governance application. The state of the application specifies the current set of participating miners, and this set can change in the normal course of the blockchain execution. Miners would typically be stakeholders in the community, but they could also be third parties that are incentivized exogenously.
 
@@ -106,18 +106,24 @@ We adopt the [partially synchronous](https://timroughgarden.org/f21/l6.pdf) comm
 
 Time is logically divided into epochs, corresponding to regular intervals of wall clock time, such as one hour, for instance. During each epoch, miners independently collect requests from community users. At the end of the epoch, miners share all user requests using [reliable Byzantine broadcast](https://groups.csail.mit.edu/tds/papers/Lynch/jacm88.pdf) for the partially synchronous model. Once all miners agree on all user requests, each miner privately computes the change to the blockchain state by invoking the governance application and supplying it with all user requests that occurred during the epoch. All miners are guaranteed to arrive at the same state, as the governance application is required to be deterministic with respect to its inputs.
 
-<hr>
+#### Infrastructure requirements
+
+In every blockchain miner nodes require storage infrastructure to persist replicas of the blockchain, and compute infrastructure to participate in the protocol and make changes to the blockchain. 
+
+Traditional general purpose blockchains have demanding infrastructure requirements. A typical miner deployment requires multiple high-end GPU machines as well as a sophisticated reliable storage solution, such as a cloud file system or key value store. These requirements may be prohibitively expensive for small and mid-size non-technical communities. Furthermore, such infrastructure may be entirely unavailable in the developing world, or it may be prohibitively complex for non-technical users to operate or administer.
+
+Our design of a governance blockchain alleviates both of these pain points. A governance miner node requires a single commodity machine (such as a home Raspberry Pi or a free-tier GitHub action runner) for compute, and access to a networked git repository for storage (which could be provided by a local business, such as GitHub, or deployed from home using any Linux distribution). 
+
+Our blockchain can execute on modest hardware because it does not entail general-purpose conflict resolution algorithms, such as proof-of-work or proof-of-storage.
+
+Our choice of git as a storage backend is informed by a few considerations. The git protocol is possibly the most ubiquitous general-purpose storage API. Free-tier git hosting is available in most countries and in lieu of this, git can be hosted "at home" from a standard Linux distribution. In contrast, higher-end storage APIs such as networked file systems or databases are provider-specific, and significantly harder to deploy, operate and migrate from.
+
+Governance blockchains require orders of magnitude less space than general-purpose ones, because they record bookkeeping information that directly describes human actions such as casting a vote or requesting a balance transfer, for example. As a result, the storage capacity of a typical single-machine git deployment is more than adequate.
+
+Finally, by using git as a chain storage and JSON as a data encoding we ensure that the blockchain's state history can be audited (both manually and programmatically) with standard tooling.
 
 ## Cover
 - what is governance
   - protocol between members + format and location of record keeping
 - application model
 - trust model
-
-- comparisons
-  - governance
-    - smart-contract DAOs
-  - dapp architecture vs 
-    - bluesky
-    - scuttlebug (https://scuttlebutt.nz/)
-    - 
