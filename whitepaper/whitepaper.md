@@ -98,11 +98,13 @@ This crucial difference enables us to design a blockchain architecture for gover
 The key architectural difference between our governance blockchain and a traditional blockchain is in the order of operations involved in processing user requests. When user requests arrive at the miners, the miners share all user requests unprocessed using a Byzantine fault-tolerant broadcast protocol. Once all miners reliably agree on the totality of all user requests in an epoch, each miner independently computes the change in state by invoking the governance application and providing it with all user requests. 
 Since the governance application is deterministic, all miners compute the same change. This protocol effectively pushes the responsibility of resolving conflicts between user requests to the governance application.
 
-#### Technical
+#### Technical dive
 
-We now describe the governance blockchain wherein the miners are the application stakeholders themselves — the community members, in our case. We adopt the [partially synchronous](https://timroughgarden.org/f21/l6.pdf) communication model whereby participant have access to a shared clock (and some reasonable assumptions can be made about network latencies). Note that a shared clock is definitionally required by a governance application, in part because any ballot requiring human input is open for voting during an interval specified relative to the standard time (e.g. GMT).
+A governance blockchain consists of a set of miners. Each miner maintains a replica of the blockchain, which holds the state of the governance application. The state of the application specifies the current set of participating miners, and this set can change in the normal course of the blockchain execution. Miners would typically be stakeholders in the community, but they could also be third parties that are incentivized exogenously.
 
+We adopt the [partially synchronous](https://timroughgarden.org/f21/l6.pdf) communication model whereby participants have access to a shared clock (and some reasonable assumptions can be made about network latencies). Note that a shared clock is definitionally required by a governance application, in part because any ballot requiring human input is open for voting during an interval specified relative to the standard time (e.g. GMT).
 
+Time is logically divided into epochs, corresponding to regular intervals of wall clock time, such as one hour, for instance. During each epoch, miners independently collect requests from community users. At the end of the epoch, miners share all user requests using [reliable Byzantine broadcast](https://groups.csail.mit.edu/tds/papers/Lynch/jacm88.pdf) for the partially synchronous model. Once all miners agree on all user requests, each miner privately computes the change to the blockchain state by invoking the governance application and supplying it with all user requests that occurred during the epoch. All miners are guaranteed to arrive at the same state, as the governance application is required to be deterministic with respect to its inputs.
 
 <hr>
 
