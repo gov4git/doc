@@ -1,15 +1,5 @@
 # Governance for git
 
-Our journey into "governance for git" begins with a real-world use case: [The Plurality Book project](XXX). The book project was conceived in October 2022 with the objective of crowdsourcing the authoring of a new book on the subject of technologies for digital democracy. By design, this is an open source project aiming to harness the expertise of many loosely (or not at all) related contributors across multiple countries in various capacities, such as translation, fact-checking, original research, discovery of prior art, typesetting, and so on.
-
-Due to the sheer scale of this project — anticipating a number of contributors in the hundreds or thousands, well-beyond the Dunbar limit — an ad-hoc approach to community organization is likely to lead to subpar results. This prompted us to pursue a systemic approach towards designing a flexible and secure solution for governance needs with practicality and rapid path-to-deployment being non-negotiable requirements.
-
-### Problem statement
-
-On its inception, the book project had a variety of specific community organizing needs along with the expectation that these needs will evolve organically over time and will entail experimentation as the norm.
-
-The minimal viable set of features largely focused on the ability to manage a community of contributors with various roles, and conduct free, fair and transparent polls for prioritizing work (such as issues or pull requests). Furthermore, we were interested in using novel polling and voting algorithms (such as the many flavors of quadratic voting) which in turn necessitate mechanisms like community-scoped currencies (for keeping track of voting rights, for instance).
-
 XXX
 - Maintain a registry of the identities of its contributors
 - Maintain a fine-grained differentiation of roles and responsibilities of individual contributors, such as "organizer", "translator for Korean", "typesetter", "editor for chapter 4" and so on.
@@ -121,9 +111,3 @@ Our choice of git as a storage backend is informed by a few considerations. The 
 Governance blockchains require orders of magnitude less space than general-purpose ones, because they record bookkeeping information that directly describes human actions such as casting a vote or requesting a balance transfer, for example. As a result, the storage capacity of a typical single-machine git deployment is more than adequate.
 
 Finally, by using git as a chain storage and JSON as a data encoding we ensure that the blockchain's state history can be audited (both manually and programmatically) with standard tooling.
-
-### Trust and security model
-
-
-## TODO
-- application model
