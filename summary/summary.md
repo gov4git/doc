@@ -32,9 +32,19 @@ Unfortunately, none of these solutions meet our requirements for operation in di
 
 ## Technical solution
 
-XXX
+As our key technical contribution we provide two software frameworks:
 
-## Infrastructure requirements
+- One, for building decentralized social applications, using only git as a backend infrastructure while deferring all computation to the client (such as a web app). This framework provides an identity system and a method for communication to application developers.
+
+- Second, for building governance-specific replicated state machines (i.e. blockchains), using git as a storage backend and commodity hardware (such as a Raspberry Pi) for execution. This framework provides execution and state replication to application developers.
+
+It is noteworthy how and why we are able to build a blockchain with low infrastructure requirements. The source of high infrastructural demands in traditional blockchains stems from expensive application-agnostic mechanisms (e.g. proof-of-work, proof-of-stake, proof-of-storage) for conflict resolution between competing applications. In contrast, community governance runs as a single application on a dedicated blockchain. Conflicts in a governance application can arise only between user requests. These are application-specific conflicts which are definitionally resolved at the application level, using human-centric protocols such as referendums, quorums, approvals, and so on. 
+
+## Software architecture
+
+![Architecture](arch.svg)
+
+## Deployment infrastructure
 
 XXX
 
@@ -43,6 +53,10 @@ XXX
 XXX
 
 ## Application development model
+
+Traditional blockchains use a VM-based architecture to execute application code. VMs provide isolation and portability. Unfortunately, VMs also necessitate the use of bleeding edge development environments, such as languages like [Solidity](https://soliditylang.org/), [AssemblyScript](https://www.assemblyscript.org/) or [WASM](https://webassembly.org/).
+
+
 
 - no VM
 - application mutates repo
