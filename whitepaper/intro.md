@@ -12,7 +12,7 @@ The minimal viable set of features largely focused on the ability to manage a co
 
 Above all, it was clear that governance needs are to be viewed as a moving target: both because the science of DAO mechanisms is still developing, and because a long-lived community will invariably evolve its rules.
 
-This informed us to approach governance as an application, supported by (and decoupled from) an underlying framework which addresses the common responsibilities: decentralized identity, decentralized communication, security, transparency, state replication and consensus.
+This informed us to approach governance as an application, supported by (and decoupled from) an underlying framework which addresses the common responsibilities: decentralized identity, decentralized communication, security, transparency, state replication, consensus and a principled mechanism for changing the program of governance itself during the normal life of the application.
 
 ### Practical constraints
 
@@ -39,6 +39,15 @@ Note that this application execution model is _different_ from the execution mod
 
 Due to the community focus of governance applications, our framework maintains an explicit list of all community members. Only members can communicate with the governance application. The membership list is shared between the application and the underlying (security and communication) framework, and the application _can_ change this list at its discretion. For instance, the application can add a new member after they have been approved with a majority vote from the current community members. Similarly, the list of governance miners is shared between the application and the framework, and can be modified by the application.
 
-Finally, our application framework provides a mechanism for changing the logic (i.e. the code) of the application itself. 
+Finally, our application framework provides a principled mechanism for changing the logic (i.e. the code) of the application itself. We believe that the fundamental function of any long-lived governance system is the ability to mediate its own change. In our software architecture, the rule of governance is embodied in the application layer and specifically its program. Whereas the underlying software framework is responsible for the immutable technical concerns of governance — execution, identity, communication, Byzantine fault tolerance, and others.
 
-XXX
+As a part of its state, our underlying framework maintains an explicit reference to the application's current logic, for instance, using content-addressable links to its source code and binary distributions. This reference is a shared state between the application and the framework, in the sense that the application can view it and mutate it as part of its normal execution. This enables applications to implement workflows like this one:
+- community members change the source of their governance application and submit a pull-request to the community governance blockchain
+- in response, a referendum is held to approve the changes
+- if approved, the running governance application is replaced with the new one for the next round of the blockchain execution
+
+In summary, a governance system can be broadly characterized in two ways:
+- Governance is a decentralized social application in that it entails asynchronous interactions with the decentralized identities of its participants, and
+- Governance is a Byzantine fault-tolerant replicated state machine
+
+In the remainder of this paper we describe the technical architecture underpinning our software framework for governance. Specifically, we describe our infrastructure requirements and how our framework implements (a) decentralized social communication and (b) Byzantine fault-tolerant state replication.

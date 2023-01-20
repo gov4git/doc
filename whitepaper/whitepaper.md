@@ -1,24 +1,56 @@
 # Governance for git
 
-XXX
-- Maintain a registry of the identities of its contributors
-- Maintain a fine-grained differentiation of roles and responsibilities of individual contributors, such as "organizer", "translator for Korean", "typesetter", "editor for chapter 4" and so on.
-- Reward contributors with virtual certificates some of which may have community scope, such as badges or voting credits, while others may have exogenous scope e.g. blockchain-scoped SBTs or hypercerts.
-- Perform fair community polls to resolve questions of prioritization, such as "Which issues or pull request should be addressed first?"
-- Define and enforce fine-grain policies governing the arbitration and approval processes for changes in various parts of the project. Some examples of policies are:
-  - "Changes to Chapter 1 can be approved by the organizer"
-  - "Changes to Chapter 2 require a majority vote across contributors who are translators, based on a given quadratic voting rule"
-  - "Changes to the governing policies requires a one-person-one-vote referendum across all contributors, or an approval by the organizer."
-- Perform services requested by the community members. For instance, a community member may request:
-  - "Transfer 20 of my voting credits to Alice."
+Our journey into "governance for git" begins with a real-world use case: [The Plurality Book project](plurality.net). The book project was conceived in October 2022 with the objective of crowdsourcing the authoring of a new book on the subject of technologies for digital democracy. By design, this is an open source project aiming to harness the expertise of many loosely (or not at all) related contributors across multiple countries in various capacities, such as translation, fact-checking, original research, discovery of prior art, typesetting, and so on.
 
-We determined that such a set of functionalities would suffice for an MVP and will go a long way in facilitating the book project, as well as potentially other projects where community-sourced prioritization is essential, such as the [Filecoin specification proposals](XXX) project.
+Due to the sheer scale of this project — anticipating a number of contributors in the hundreds or thousands, well-beyond the Dunbar limit — an ad-hoc approach to community organization is likely to lead to subpar results. This prompted us to pursue a systemic approach towards designing a flexible and secure solution for governance needs with practicality, low cost, rapid iteration and ease of deployment being non-negotiable requirements.
 
-Nevertheless, we also understood that any application in governance will have to endure numerous changes throughout its lifetime to be successful. By its very nature governance is always-evolving and entails continuous, live experimentation with new policies and functionalities. For instance, a key objective of the book project is to experiment with a variety of research-stage quadratic voting schemes that mediate participants' voting power in ways that ensure representation of diverse points of view.
+### Problem statement
 
-As a result, we set our sight on creating a framework for building governance applications which would enable rapid and safe experimentation by its users and in production.
+On its inception, the book project had a variety of specific community organizing needs — common to many open source projects — along with the expectation that these needs will evolve organically over time and will entail experimentation as the norm. 
 
+The minimal viable set of features largely focused on the ability to manage a community of contributors with various roles; and conduct free, fair and transparent polls for prioritizing work (such as issues or pull requests). Furthermore, we were interested in using novel polling and tallying algorithms (such as the many flavors of Quadratic Voting) which in turn necessitate contextual mechanisms such as community-scoped member accounts (for keeping track of voting credits, badges, and other logical tokens).
 
+Above all, it was clear that governance needs are to be viewed as a moving target: both because the science of DAO mechanisms is still developing, and because a long-lived community will invariably evolve its rules.
+
+This informed us to approach governance as an application, supported by (and decoupled from) an underlying framework which addresses the common responsibilities: decentralized identity, decentralized communication, security, transparency, state replication, consensus and a principled mechanism for changing the program of governance itself during the normal life of the application.
+
+### Practical constraints
+
+We take a somewhat uncommon (and ambitious) aim at serving the tail end of "disadvantaged" users who may live in regions of the world that are disconnected from the global Internet and where commodity hardware may be the only available.
+
+Anecdotally, we would like to enable a group of people — living in a war-torn or disaster zone with local connectivity — to form an open source community and crowd-source vital information securely.
+
+In reality, our constraints address a much larger set of use cases. For instance, any decentralized governance solution based on public blockchain technology (which requires connection to the global Internet) can be incapacitated by authoritarian states: Public blockchains have well-known addresses which can be fire-walled surgically.
+
+In further consideration of the heavy tail of users, we insist that our solutions are accessible to "non-technical" users. Every decentralized application entails some technical responsibility of its users. We assume that a "non-technical" user is able to provision and administer a git repository. Whereas a user able to provision and operate a container virtual machine — a fairly involved process, in comparison — is considered "technical".
+Our goal is to design governance software which targets non-technical users, both in the roles of community organizers and community members.
+
+Our next consideration pertains to security and trust. Communities, especially if successful, grow large. Large groups of people are more likely to be comprised of strangers. It is therefore the software's responsibility to ensure members' rights are respected in that governance is conducted as advertised. In practice, governance is codified as a computer program which evolves its state in response to messages from the community members and clock events. Fair governance equates to faithful and correct execution of said program.
+
+We adopt the current gold standard for faithful state machine execution: Byzantine fault tolerance. In the context of security, we assume that a community utilizing our software will comprise a set of one or more designated "trusted" users. These users will take on a differentiated responsibility of running the (minimal) infrastructure required for the sustenance of the replicated state of the governance application. These users might be appropriately called "miners", reflecting the fact that their role is analogous to the role of miners in a public blockchain. In particular, we require that governance execution is provably correct and lively unless more than 33% of miners fail in the Byzantine sense (i.e. hardware failure or adversarial behavior).
+
+### Application model
+
+We view governance as a single-threaded deterministic program (aka a state machine), whose execution is driven by exogenous events of two types: communication from community members or wall clock events.
+
+In our design, the application logic is invoked at regular wall clock intervals, such as once per hour, which are called rounds. During each invocation, the application is provided with a list of all events (i.e. communication from community participants) that have occurred since the last round. The application is then free to process these events as a batch and update its state.
+
+Note that this application execution model is _different_ from the execution model of smart contracts on blockchains like Ethereum. A smart contract processes events (which represent smart contract method calls) one at a time. In contrast, our governance application can "see" the entire batch of events arising during a round, which enables it to handle conflicts at the application level.
+
+Due to the community focus of governance applications, our framework maintains an explicit list of all community members. Only members can communicate with the governance application. The membership list is shared between the application and the underlying (security and communication) framework, and the application _can_ change this list at its discretion. For instance, the application can add a new member after they have been approved with a majority vote from the current community members. Similarly, the list of governance miners is shared between the application and the framework, and can be modified by the application.
+
+Finally, our application framework provides a principled mechanism for changing the logic (i.e. the code) of the application itself. We believe that the fundamental function of any long-lived governance system is the ability to mediate its own change. In our software architecture, the rule of governance is embodied in the application layer and specifically its program. Whereas the underlying software framework is responsible for the immutable technical concerns of governance — execution, identity, communication, Byzantine fault tolerance, and others.
+
+As a part of its state, our underlying framework maintains an explicit reference to the application's current logic, for instance, using content-addressable links to its source code and binary distributions. This reference is a shared state between the application and the framework, in the sense that the application can view it and mutate it as part of its normal execution. This enables applications to implement workflows like this one:
+- community members change the source of their governance application and submit a pull-request to the community governance blockchain
+- in response, a referendum is held to approve the changes
+- if approved, the running governance application is replaced with the new one for the next round of the blockchain execution
+
+In summary, a governance system can be broadly characterized in two ways:
+- Governance is a decentralized social application in that it entails asynchronous interactions with the decentralized identities of its participants, and
+- Governance is a Byzantine fault-tolerant replicated state machine
+
+In the remainder of this paper we describe the technical architecture underpinning our software framework for governance. Specifically, we describe our infrastructure requirements and how our framework implements (a) decentralized social communication and (b) Byzantine fault-tolerant state replication.
 
 ### Framework: Decentralized social applications over git
 
