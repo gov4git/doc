@@ -20,26 +20,7 @@ As a result, we set our sight on creating a framework for building governance ap
 
 
 
-- Transparency
-- Security
-- Economics
-- Evolvability
-
-<hr>
-
-
-  - requirements
-    - security
-      - transparent, accountable and non-malleable record-keeping that
-      - protects the interests of all participants (regardless of role)
-    - economics and practicality
-      - access
-      - cost
-    - functionality
-      - rapid iteration with new logics and rules
-
-
-### Decentralized social applications over git
+### Framework: Decentralized social applications over git
 
 By definition governance is a social application. It entails multiple stakeholders — such as contributors, organizers, even the organization itself — asynchronously communicating on matters of governance. For instance, a contributor may send their vote on a ballot administered by the organization; the organization may send notifications to contributors about a pending referendum on a pull request approval; or one contributor may simply want to engage in a private chat session with another.
 
@@ -75,7 +56,7 @@ There are two caveats to using git as an application backend. Users will experie
 
 Our application framework uses a channel-like abstraction to model directed communication from Alice to Bob. Conceptually, Alice and Bob share a git branch that Alice can write to and Bob can read from. When Alice appends a new git commit to the branch, she is sending a message to Bob. Under the hood, Alice maintains a _dropbox_ branch, associated with the channel, inside her public repository. Bob maintains a branch within his repository that tracks Alice's dropbox and synchronizes with it occasionally, processing previously unseen messages. Communication is signed (and verified) generically at the commit level. Communication can also be encrypted by applying encryption to individual files inside the repository.
 
-### Governance-specific blockchain design
+### Framework: Governance-specific blockchain over git
 
 In general, a _blockchain_ is an implementation of a state machine that entails secure replication by miners. State changes, recorded in the blocks of a blockchain, are ultimately driven by asynchronous requests (such as a "call" to a smart contract method) by users, which are processed by miners and packaged into proposals, known as transactions.
 
