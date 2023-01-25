@@ -86,6 +86,8 @@ Using git for application storage also affords us to build a simple, reactive ap
 
 There are two caveats to using git as an application backend. Users will experience a latency in UI interactions stemming from the underlying multi-round cloning protocol used by git. This latency is perceptibly longer (e.g. 1-2 seconds) compared to Web2 applications (e.g. 200ms), but also perceptibly shorter than blockchain-based applications (e.g. 1 min). Standard git hosting solutions prohibit unsolicited communication. This makes it hard to implement applications such as email over git, for instance. On the other hand, most modern social applications — such as social networking or community governance — do not entail unsolicited communication.
 
+![Alice sends a message to Bob](alicebob.svg)
+
 Our application framework uses a channel-like abstraction to model directed communication from Alice to Bob. Conceptually, Alice and Bob share a git branch that Alice can write to and Bob can read from. When Alice appends a new git commit to the branch, she is sending a message to Bob. Under the hood, Alice maintains a _dropbox_ branch, associated with the channel, inside her public repository. Bob maintains a branch within his repository that tracks Alice's dropbox and synchronizes with it occasionally, processing previously unseen messages. Communication is signed (and verified) generically at the commit level. Communication can also be encrypted by applying encryption to individual files inside the repository.
 
 ### Framework: Governance-specific blockchain over git
@@ -97,6 +99,8 @@ Traditional multi-application blockchains, like Ethereum, first compute the effe
 In contrast, in the case of sovereign community governance, the blockchain miners are the community stakeholders (or a subset thereof) themselves. In this case, the blockchain is serving a single application and furthermore, by definition, it is the governance application's responsibility to arbitrate conflicting requests by its members — not the blockchain's.
 
 This crucial difference enables us to design a blockchain architecture for governance which sidesteps expensive conflict resolution operations, while preserving all security guarantees enjoyed by traditional blockchains. As a result, our governance blockchain can be deployed on cheap commodity hardware (such as Raspberry Pi) or a pre-existing git hosting provider, and it does not require connectivity to the global Internet.
+
+![Public blockchain vs governance blockchain](public-vs-gov.svg)
 
 The key architectural difference between our governance blockchain and a traditional blockchain is in the order of operations involved in processing user requests. When user requests arrive at the miners, the miners share all user requests unprocessed using a Byzantine fault-tolerant broadcast protocol. Once all miners reliably agree on the totality of all user requests in an epoch, each miner independently computes the change in state by invoking the governance application and providing it with all user requests. 
 Since the governance application is deterministic, all miners compute the same change. This protocol effectively pushes the responsibility of resolving conflicts between user requests to the governance application.
