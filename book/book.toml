@@ -3,4 +3,4 @@ authors = ["Petar Maymounkov"]
 language = "en"
 multilingual = false
 src = "src"
-title = "Decentralized applications and micro-chains over git"
+title = "Decentralized applications and single-contract blockchains over git"
