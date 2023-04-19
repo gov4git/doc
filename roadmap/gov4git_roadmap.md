@@ -183,7 +183,7 @@ From a technical standpoint, auditing comprises two steps:
 
 ## Phase 4: Sound governance mechanisms (research direction)
 
-Much Governance mechanisms are essentially multi-party protocols aiming to attain desired outcomes at the community-level. 
+Governance mechanisms are essentially multi-party protocols aiming to attain desired outcomes at the community-level. 
 
 As the complexity of governance protocols rises, much like in the case of networking protocols, it becomes difficult for developers to assertain that their mechanism implementations are correct and function as intended towards community level goals. 
 
