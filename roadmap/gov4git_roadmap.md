@@ -187,7 +187,7 @@ Governance mechanisms are essentially multi-party protocols aiming to attain des
 
 As the complexity of governance protocols rises, much like in the case of networking protocols, it becomes difficult for developers to assertain that their mechanism implementations are correct and function as intended towards community level goals. 
 
-To address this problem, we adapt mechanisms from software verification to governance design.
+To address this problem, we adapt techniques from software verification to governance design.
 
 Our governance framework already abstracts a governance application as a standard binary which mutates a file system. This enables mechanism developers to use any programming technology, but in particular verification languages such as the Lean Theorem Prover language developed by Microsoft Research. 
 
