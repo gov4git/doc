@@ -180,3 +180,16 @@ To make practical use of this "certificate", we introduce a tool which audits th
 From a technical standpoint, auditing comprises two steps:
 - First, the execution history of the governance application (a state machine) is replayed from the genesis commit (the initial state) to verify that it matches the contents of the governance repo.
 - Second, for every change (i.e. git commit) in the source code repository it is verified that there is a matching record in the governance repo, proving that policy was followed.
+
+## Phase 4: Sound governance mechanisms (research direction)
+
+Much Governance mechanisms are essentially multi-party protocols aiming to attain desired outcomes at the community-level. 
+
+As the complexity of governance protocols rises, much like in the case of networking protocols, it becomes difficult for developers to assertain that their mechanism implementations are correct and function as intended towards community level goals. 
+
+To address this problem, we adapt mechanisms from software verification to governance design.
+
+Our governance framework already abstracts a governance application as a standard binary which mutates a file system. This enables mechanism developers to use any programming technology, but in particular verification languages such as the Lean Theorem Prover language developed by Microsoft Research. 
+
+This seamless integration lays out the possibility of developing governance mechanisms whose logical correctness is formally provable using the same tools that have verified the correctness of some of the deepest results in Mathematics. 
+
