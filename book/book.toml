@@ -1,6 +1,0 @@
-[book]
-authors = ["Petar Maymounkov"]
-language = "en"
-multilingual = false
-src = "src"
-title = "Decentralized applications and single-contract blockchains over git"

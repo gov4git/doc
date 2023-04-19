@@ -1,2 +1,0 @@
-# Micro blockchains over git
-
