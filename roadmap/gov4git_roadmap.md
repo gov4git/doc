@@ -185,7 +185,7 @@ From a technical standpoint, auditing comprises two steps:
 
 Governance mechanisms are essentially multi-party protocols aiming to attain desired outcomes at the community-level. 
 
-As the complexity of governance protocols rises, much like in the case of networking protocols, it becomes difficult for developers to assertain that their mechanism implementations are correct and function as intended towards community level goals. 
+As the complexity of governance protocols rises, much like in the case of networking protocols, it becomes difficult for developers to ascertain that their mechanism implementations are correct and function as intended towards community level goals. 
 
 To address this problem, we adapt techniques from software verification to governance design.
 
